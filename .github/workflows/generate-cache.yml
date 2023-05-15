@@ -1,0 +1,47 @@
+name: Generate Cache
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate_jellyfin_cache:
+    name: Generate Jellyfin Cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Dependencies
+        run: |
+          sudo apt update -y
+          sudo apt install npm -y
+
+      - name: Get Git Source
+        env:
+          URL: https://github.com/LizardByte/Sunshine.git
+          COMMIT: d70d084f9fbb4e0150977a89d94937418a3ccf9c
+        run: |
+          mkdir src
+          git clone --depth 1 ${URL} src
+          cd src && git reset --hard ${COMMIT}
+
+      - name: Generate package-lock for npm
+        run: cd src && npm install --lockfile-version 2 --package-lock-only
+
+      - name: Clone flatpak tools
+        run: git clone --depth 1 https://github.com/flatpak/flatpak-builder-tools.git
+
+      - name: Install flatpak-node-generator
+        run: pip install ./flatpak-builder-tools/node
+
+      - name: Generate cache for npm
+        run: flatpak-node-generator -o npm-generated-sources.json npm src/package-lock.json
+
+      - name: Move Artifacts for Upload
+        run: |
+          mkdir artifacts
+          mv src/package-lock.json artifacts/
+          mv npm-generated-sources.json artifacts/
+
+      - name: Upload Flatpak Cache Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: flatpak-cache
+          path: artifacts
