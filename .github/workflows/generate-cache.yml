@@ -16,7 +16,7 @@ jobs:
       - name: Get Git Source
         env:
           URL: https://github.com/LizardByte/Sunshine.git
-          COMMIT: d70d084f9fbb4e0150977a89d94937418a3ccf9c
+          COMMIT: 31e8b798dabf47d5847a1b485f57cf850a15fcae
         run: |
           mkdir src
           git clone --depth 1 ${URL} src
