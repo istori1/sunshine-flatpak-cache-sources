@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate_jellyfin_cache:
-    name: Generate Jellyfin Cache
+  generate_sunshine_cache:
+    name: Generate Sunshine Cache
     runs-on: ubuntu-latest
     steps:
       - name: Setup Dependencies
@@ -16,7 +16,7 @@ jobs:
       - name: Get Git Source
         env:
           URL: https://github.com/LizardByte/Sunshine.git
-          COMMIT: 31e8b798dabf47d5847a1b485f57cf850a15fcae
+          COMMIT: 5bca024899eff8f50e04c1723aeca25fc5e542ca
         run: |
           mkdir src
           git clone --depth 1 ${URL} src
