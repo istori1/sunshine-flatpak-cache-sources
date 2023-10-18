@@ -13,15 +13,22 @@ jobs:
           sudo apt update -y
           sudo apt install npm -y
 
+      # - name: Get Git Source
+      #   # v0.21.0
+      #   env:
+      #     URL: https://github.com/LizardByte/Sunshine.git
+      #     COMMIT: 5bca024899eff8f50e04c1723aeca25fc5e542ca
+      #   run: |
+      #     mkdir src
+      #     git clone --depth 1 ${URL} src
+      #     cd src && git reset --hard ${COMMIT}
+
       - name: Get Git Source
-        # v0.21.0
-        env:
-          URL: https://github.com/LizardByte/Sunshine.git
-          COMMIT: 5bca024899eff8f50e04c1723aeca25fc5e542ca
-        run: |
-          mkdir src
-          git clone --depth 1 ${URL} src
-          cd src && git reset --hard ${COMMIT}
+        uses: actions/checkout@v3
+        with:
+          repository: LizardByte/Sunshine
+          path: src
+          ref: v0.21.0
 
       - name: Generate package-lock for npm
         run: cd src && npm install --lockfile-version 2 --package-lock-only
