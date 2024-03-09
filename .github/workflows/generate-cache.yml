@@ -18,7 +18,7 @@ jobs:
         with:
           repository: LizardByte/Sunshine
           path: src
-          ref: v0.21.0
+          ref: v0.22.0
 
       - name: Generate package-lock for npm
         run: cd src && npm install --lockfile-version 2 --package-lock-only
