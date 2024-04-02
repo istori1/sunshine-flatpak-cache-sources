@@ -21,7 +21,7 @@ jobs:
           ref: v0.22.2
 
       - name: Generate package-lock for npm
-        run: cd src && npm install --lockfile-version 2 --package-lock-only
+        run: cd src && npm install --package-lock-only
 
       - name: Clone flatpak tools
         run: git clone --depth 1 https://github.com/flatpak/flatpak-builder-tools.git
